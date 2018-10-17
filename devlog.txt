@@ -13,3 +13,11 @@ Actions we will take:
   in the devlog.
   3) Have a clear objective behind each change you make in order to maintain
   a stable program.
+
+IsaacJ -- 2018-17-10 01:12
+Changes to design document:
+  1) Added explanations to database schema to clearly describe the process in which
+  a user edits a story, whose action is added to the logs database.
+  2) Added component map to detail how everything working behind the scenes connects
+  to each other.
+  3) Added more clarity to site map.
