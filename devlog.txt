@@ -1,4 +1,43 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+USAGE:
+* Replace all fields, angle brackets included, with specified info.
+  eg, pd <pd#> --> pd 3
+* Delete these instructions once all teammates understand usage.
+  (from tilde bar above to tilde bar below)
+* rename this file devlog.txt
+
+devlog--
+Use keyboard shortcut to jump to end,
+ replicate entry template, (Ctrl-Shift up x5, Ctrl-X, Ctrl-V x2)
+ modify appropriately.
+Each entry should begin with the following format:
+ firstL -- TIMESTAMP\n
+e.g.:
+clydeS -- 2999-12-31 23:59
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Quack-a-Moo
+Addison Huang
+Mohammed Jamil
+Isaac Jon
+Ahnaf Kazi
+pd 6
+---------------------
+Collaborative storytelling game/website
+
+ ______   ______   __   __   __       ______   _______
+/_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\
+\:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__
+ \:\ \ \ \\:\/___/\\:\ \\ \ \\:\ \    \:\ \ \ \\:\ /____/\
+  \:\ \ \ \\::___\/_\:\_/.:\ \\:\ \____\:\ \ \ \\:\\_  _\/
+   \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \
+    \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/
+==============================================================
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
 IsaacJ -- 2018-17-10 00:24
+--------------------------------------------------------------
 Response to reading:
   The author brings up many points that are useful to programmers
 such as ourselves, which we may have already encountered or will encounter in the future.
@@ -13,15 +52,19 @@ Actions we will take:
   in the devlog.
   3) Have a clear objective behind each change you make in order to maintain
   a stable program.
+==============================================================
 
 IsaacJ -- 2018-17-10 01:12
+--------------------------------------------------------------
 Changes to design document:
   1) Added explanations to database schema to clearly describe the process in which
   a user edits a story, whose action is added to the logs database.
   2) Added component map to detail how everything working behind the scenes connects
   to each other.
   3) Added more clarity to site map.
+==============================================================
 
 MohammedJ -- 2018-17-10 12:11
+--------------------------------------------------------------
 Added Flask starter kit
-
+==============================================================
