@@ -1,0 +1,15 @@
+IsaacJ -- 2018-17-10 00:24
+Response to reading:
+  The author brings up many points that are useful to programmers
+such as ourselves, which we may have already encountered or will encounter in the future.
+It stresses the importance of having a cohesive teamwork environment, making sure
+that everyone is on the same page to prevent chaotic programming breakages. Additionally,
+it is important to thoroughly test your code to prevent unexpected errors further down
+the road, which at that point, it may be harder to detect where the bug is.
+Actions we will take:
+  1) Stay in contact with teammates, and clearly communicate the idea
+  behind the things that you change or add.
+  2) Do not add to the project unless you fully understand the changes mentioned
+  in the devlog.
+  3) Have a clear objective behind each change you make in order to maintain
+  a stable program.
