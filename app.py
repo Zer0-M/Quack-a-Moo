@@ -1,8 +1,8 @@
 '''
-JamBuds
-Sophia Xia, Mohammed S. Jamil
+Quack-a-Moo
+Mohammed S. Jamil, Isaac Jon, Ahnaf Kazi, Addison Huang
 SoftDev1 pd6
-K15 -- Oh yes, perhaps I do...
+P #00: Da Art of Storytellin'
 2018-10-01
 '''
 
