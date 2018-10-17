@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block head %}<title> Home </title>{% endblock %}
+{% block content %}
+<h1>{{Name}}</h1>
+{% set msgs = get_flashed_messages() %}
+	{% for each in msgs %}
+		<h2>{{each}}<h2>
+		<br>
+{% endfor %}
+<h3>Stories Edited</h3>
+<ol>
+    {% for each in edited %}
+        <li><{{each}}</li>
+    {% endfor %}
+</ol>
+<h3>Best Stories</h3>
+<ol>
+    {% for each in best %}
+        <li><{{each}}</li>
+    {% endfor %}
+</ol>
+<h3><a href={{all}}>All Stories</a></h3>
+<h3><a href={{create}}>Create Your Own</a></h3>
+
+
+
+    

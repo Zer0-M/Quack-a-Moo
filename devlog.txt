@@ -74,3 +74,8 @@ AddisonH -- 2018-17-10 12:28
 Added data and utils folder
 Added python script to create a database
 ==============================================================
+
+MohammedJ -- 2018-17-10 12:31
+--------------------------------------------------------------
+Added templates for the first few pages on the site.
+==============================================================
