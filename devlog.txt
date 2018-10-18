@@ -83,3 +83,7 @@ Added templates for the first few pages on the site.
 AhnafK -- 2018-17-10 23:16
 --------------------------------------------------------------
 Began work on authenticator
+
+AhnafK -- 2018-18-10 12:36
+--------------------------------------------------------------
+Began work on authenticator
