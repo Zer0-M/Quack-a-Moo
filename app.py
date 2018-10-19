@@ -23,13 +23,13 @@ def home():
 
 @app.route("/auth")
 def authPage():        
-    if request.args['username'] != username:
+    if request.forms['username'] != username:
         flash('username incorrect')
-        if (request.args['password'] != password):
+        if (request.forms['password'] != password):
             flash('password incorrect')
         return redirect(url_for('home'))
-    elif request.args['username'] == username: 
-        if request.args['password'] == password:
+    elif request.forms['username'] == username: 
+        if request.forms['password'] == password:
             session['username'] = username
             return render_template('home.html',name = username)
         else:
