@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
 {% block head %}<title> All stories </title>{% endblock %}
+
 {% block content %}
-<h1>All Stories</h1>
+<h1>{% block heading %}All Stories{% endblock %}</h1>
 <h3>Sorted by last edited</h3>
 <ul>
     <li>bill kill</li>
