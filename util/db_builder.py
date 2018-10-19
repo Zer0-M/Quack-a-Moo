@@ -21,7 +21,7 @@ def story(): #create the story db
     c.execute(command)
 
 def logs(): #creates the logs db
-    command = "CREATE TABLE logs(entryId INTEGER, username TEXT, text TEXT)"
+    command = "CREATE TABLE logs(entryId INTEGER, username TEXT, title TEXT, text TEXT)"
     c.execute(command)
 
 def main(): #calls all of the functions to build the databases
