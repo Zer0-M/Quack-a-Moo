@@ -4,7 +4,7 @@
     {% block heading %}
         <h1>Create Story</h1>
     {% endblock %}
-<form action = "/auth" method="POST">
+<form action = "/view" method="POST">
     {% block title %}
         <h2>Christen your story</h2>
         <input type = "text" name = "username" value="My frist tsory">
@@ -13,6 +13,9 @@
     <h2>Write Some stuff</h2>
     <textarea rows = "10" cols ="150">Bacon ipsum dolor amet ribeye shank chicken short loin t-bone, biltong doner sausage shoulder ground round pancetta leberkas.</textarea>
     <br>
+    <input type = "submit" name = "sub1" value="Submit">
+    <br>
+
 
 {% endblock %}
 

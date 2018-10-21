@@ -17,23 +17,21 @@ app.secret_key = urandom(32)
 @app.route("/")
 def home():
     if 'username' in session:
-        return render_template('welcome.html', u = username)
+        return render_template('home.html', u = username)
     else:
         return render_template('auth.html')
 
-@app.route("/auth")
+@app.route("/auth",methods=['GET','POST'])
 def authPage():        
-    if request.forms['username'] != username:
-        flash('username incorrect')
-        if (request.forms['password'] != password):
-            flash('password incorrect')
+    if request.form['username'] != username:
+        flash('incorrect credentials')
         return redirect(url_for('home'))
-    elif request.forms['username'] == username: 
-        if request.forms['password'] == password:
+    elif request.form['username'] == username: 
+        if request.form['password'] == password:
             session['username'] = username
-            return render_template('home.html',name = username)
+            return render_template('home.html', u=username)
         else:
-            flash('password incorrect')
+            flash('incorrect credentials')
             return redirect(url_for('home'))
 
 @app.route("/logout")
@@ -41,6 +39,18 @@ def logout():
     if 'username' in session:
         session.pop('username')
     return redirect(url_for("home"))
+@app.route("/all")
+def all():
+    if 'username' in session:
+        return render_template('all.html', u = username)
+    else:
+        return redirect(url_for("home"))
+@app.route("/create")
+def create():
+    if 'username' in session:
+        return render_template('create.html', u = username)
+    else:
+        return redirect(url_for("home"))
 if __name__ == '__main__':
         app.debug = True
         app.run()
