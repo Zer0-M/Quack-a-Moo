@@ -120,3 +120,8 @@ MohammedJ -- 2018-19-10 12:31
 Correction to previous log entry, there was one more template required. 
 Also fixed some issues that were present in the authentication code.
 ==============================================================
+
+MohammedJ -- 2018-20-10 20:52
+--------------------------------------------------------------
+connected create story to view story
+==============================================================

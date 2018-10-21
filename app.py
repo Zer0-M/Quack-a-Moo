@@ -45,12 +45,22 @@ def all():
         return render_template('all.html', u = username)
     else:
         return redirect(url_for("home"))
-@app.route("/create")
+@app.route("/create",methods=['GET','POST'])
 def create():
     if 'username' in session:
         return render_template('create.html', u = username)
     else:
         return redirect(url_for("home"))
+@app.route("/view",methods=['GET','POST'])
+def view():
+    if 'username' in session:
+        name=request.form['title']
+        text=request.form['story']
+        print(name)
+        return render_template('view.html',title=name, story=text)
+    else:
+        return redirect(url_for("home"))
+
 if __name__ == '__main__':
         app.debug = True
         app.run()
