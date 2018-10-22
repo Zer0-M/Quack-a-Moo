@@ -1,4 +1,8 @@
 # Quack-a-Moo
+#### Members: Mohammed S. Jamil, Isaac Jon, Ahnaf Kazi, Addison Huang
+#### SoftDev1 pd6
+#### P #00: Da Art of Storytellin'
+#### 2018-10-01
 
 ## What is it
 So you wanna be the next Shakespeare, and only want to write one horrible paragraph of a story? Then this is the place for you.
