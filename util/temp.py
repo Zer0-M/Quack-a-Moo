@@ -38,8 +38,12 @@ if request.form["submit"] == "add":
     entryId = len(entryIds)#the next entryId in the logs
     command = "INSERT INTO logs VALUES(\"" + entryId + "\"," + username + "\","+ title + "\"," +body")" #updates logs
     c.execute(command) #executes command
-    c.execute("SELECT title, body FROM stories WHERE" )
-    c.fetchall()
+    c.execute("SELECT body FROM stories WHERE stories.title ='" +title + "';")
+    oldBody = c.fetchall()
+    body = oldBody + body
+    command = "UPDATE stories SET body = '" + body + "'WHERE stories.title ='" + title + "';"
+    c.execute(command)
+    
     
     
     
