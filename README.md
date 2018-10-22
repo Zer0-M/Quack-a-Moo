@@ -22,6 +22,7 @@ Run these commands in your terminal
 ```
 Then go to preferred non-Chrome web browser and go to <br/>
 http://127.0.0.1:5000/ <br/>
+<br/>
 After you're done remember to disable your virtuatl environment by using the following command in the terminal: 
 ```bash
     $ deactivate
