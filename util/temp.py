@@ -44,7 +44,9 @@ if request.form["submit"] == "add":
     command = "UPDATE stories SET body = '" + body + "'WHERE stories.title ='" + title + "';"
     c.execute(command)
     
-    
+def adduser(username, password):
+    command = "INSERT INTO users VALUES(" + '"' + username + '", "' + password + '")'
+    c.execute(command)
     
     
     

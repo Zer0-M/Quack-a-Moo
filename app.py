@@ -9,6 +9,11 @@ P #00: Da Art of Storytellin'
 from flask import Flask,render_template,request,session,url_for,redirect,flash
 from os import urandom
 
+import sqlite3 #imports sqlite
+DB_FILE="data/quackamoo.db" 
+db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+c = db.cursor() #facilitates db operations
+
 app = Flask(__name__)
 username = 'zero123'
 password = '1234'
@@ -33,6 +38,12 @@ def authPage():
         else:
             flash('incorrect credentials')
             return redirect(url_for('home'))
+        
+#@app.route("/register",methods=['GET','POST'])
+#def register():
+#    command = 'SELECT * FROM users;'
+#    c.execute(command)
+
 
 @app.route("/logout")
 def logout():
