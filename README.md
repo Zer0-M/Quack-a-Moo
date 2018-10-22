@@ -20,9 +20,9 @@ Run these commands in your terminal
 ```bash
     $ python3 app.py
 ```
-Then go to preferred non-Chrome web browser and go to
-(http://127.0.0.1:5000/)
-After you're done remember to disable your virtuatl environment by using the following command in the terminal:
+Then go to preferred non-Chrome web browser and go to <br/>
+http://127.0.0.1:5000/ <br/>
+After you're done remember to disable your virtuatl environment by using the following command in the terminal: 
 ```bash
     $ deactivate
 ```
