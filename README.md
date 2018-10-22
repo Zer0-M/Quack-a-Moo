@@ -7,22 +7,22 @@ Our website facilitates the creation of a nonsensical story by collaborating wit
 ## What do you need to run
 On your terminal run the following commands
 Make sure you have __python3__ installed
-'''
+```
     $ git clone https://github.com/Zer0-M/Quack-a-Moo.git # this clones our repo in order to run 
     $ python3 -m venv quack # this creates a virtual environment named quack. Replace the name as you see fit 
     $ . quack/bin/activate # this activates the virtual environment 
     $ pip3 install wheel 
     $ pip3 install flask # since our code was written using the flask framework
-'''
+```
 
 ## How do you run
 Run these commands in your terminal
-'''
+```
     $ python3 app.py
-'''
+```
 Then go to preferred non-Chrome web browser and go to
 (http://127.0.0.1:5000/)
 After you're done remember to disable your virtuatl environment by using the following command in the terminal:
-'''
+```
     $ deactivate
-'''
+```
