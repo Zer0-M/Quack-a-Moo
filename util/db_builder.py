@@ -31,5 +31,6 @@ def main(): #calls all of the functions to build the databases
         logs()
     except:
         pass
+    
 
 main()

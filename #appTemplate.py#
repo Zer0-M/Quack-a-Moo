@@ -16,7 +16,7 @@ def home():
     if 'username' in session:
         return render_template('welcome.html', u = username)
     else:
-        return render_template('auth.html')
+        return render_template('home.html')
 
 @app.route("/auth")
 def authPage():        
@@ -28,7 +28,7 @@ def authPage():
     elif request.args['username'] == username: 
         if request.args['password'] == password:
             session['username'] = username
-            return render_template('home.html', u = username, message = "Welcome ", x = "Logout")
+            return render_template('welcome.html', u = username, message = "Welcome ", x = "Logout")
         else:
             flash('password incorrect')
             return redirect(url_for('home'))
@@ -41,3 +41,5 @@ def logout():
 if __name__ == '__main__':
         app.debug = True
         app.run()
+
+
