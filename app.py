@@ -10,7 +10,7 @@ from flask import Flask,render_template,request,session,url_for,redirect,flash
 from os import urandom
 
 import sqlite3 #imports sqlite
-DB_FILE="data/quackamoo.db" 
+DB_FILE="data/quackamoo.db"
 db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
 c = db.cursor() #facilitates db operations
 
@@ -27,22 +27,33 @@ def home():
         return render_template('auth.html')
 
 @app.route("/auth",methods=['GET','POST'])
-def authPage():        
+def authPage():
     if request.form['username'] != username:
         flash('incorrect credentials')
         return redirect(url_for('home'))
-    elif request.form['username'] == username: 
+    elif request.form['username'] == username:
         if request.form['password'] == password:
             session['username'] = username
             return render_template('home.html', u=username)
         else:
             flash('incorrect credentials')
             return redirect(url_for('home'))
-        
-#@app.route("/register",methods=['GET','POST'])
-#def register():
-#    command = 'SELECT * FROM users;'
-#    c.execute(command)
+
+@app.route("/register",methods=['GET','POST'])
+def register():
+    newUsername = request.form['newUsername']
+    newPassword = request.form['newPassword']
+    command = 'SELECT username FROM users;'
+    print(command)
+    print(c.execute(command))
+    userList = c.fetchall()
+    if newUsername not in userList:
+        db_updater.addUser(newUsername, newPassword)
+        session['username'] = newUsername
+        return render_template('home.html', u=newUsername)
+    else:
+        flash('Username Taken')
+        return redirect(url_for('home'))
 
 
 @app.route("/logout")
@@ -75,4 +86,3 @@ def view():
 if __name__ == '__main__':
         app.debug = True
         app.run()
-
