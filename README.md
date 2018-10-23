@@ -6,7 +6,7 @@
 
 ## What is it
 So you wanna be the next Shakespeare, and want to show your genius in one paragraph of a story? Then this is the place for you.
-Our website facilitates the creation of a nonsensical story by collaborating with other people. We believe that collaboration will lead to elaboration. You can create your own low-effort story and wait as no one adds to it. The other option is to look at the last edit in a story and continue the story or ruin it for everyone by writing nonsense following the edit.
+Our website facilitates the creation of a nonsensical story by collaborating with other people. We believe that collaboration will lead to elaboration. You can create your own low-effort story and wait as no one adds to it. The other option is to look at the last edit in a story and continue the story or ruin it for everyone by writing nonsense.
 
 ## What do you need to run
 On your terminal run the following commands
