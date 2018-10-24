@@ -8,7 +8,8 @@ P #00: Da Art of Storytellin'
 ''' this file stores the updating database code'''
 
 import sqlite3
-DB_FILE = "../data/quackamoo.db"
+from flask import request,session
+DB_FILE = "./data/quackamoo.db"
 
 db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
 c = db.cursor() #facilitates db operations
@@ -19,11 +20,8 @@ create()
 This function is called when a new story is created
 It adds an entry in the logs and stories database
 '''
-def create():
+def create(title, body, username, ):
     if request.form["submit"] == "create": 
-        title = request.form["title"] #variables for code readability
-        body = request.form["body"]
-        username = session["username"]
         command = "INSERT INTO stories VALUES(?,?)" #adds the story to the stories db
         c.execute(command,(title,body)) #executes the insert story command
         c.execute("SELECT entryId FROM logs") #selects all of the entryids
@@ -32,8 +30,8 @@ def create():
             entryId = len(entryIds)#the next entryId in the logs
         else:
             entryId = 0
-            command2 = "INSERT INTO logs VALUES(?,?,?,?)" #updates logs
-            c.execute(command2, (entryId,username,title,body)) #executes the insert log entry command
+        command2 = "INSERT INTO logs VALUES(?,?,?,?)" #updates logs
+        c.execute(command2, (entryId,username,title,body)) #executes the insert log entry command
 
 '''
 add()

@@ -5,7 +5,7 @@ SoftDev1 pd6
 P #00: Da Art of Storytellin'
 2018-10-01
 '''
-
+from util import db_updater as update
 from flask import Flask,render_template,request,session,url_for,redirect,flash
 from os import urandom
 
@@ -20,7 +20,7 @@ app.secret_key = urandom(32)
 @app.route("/")
 def home():
     if 'username' in session:
-        return render_template('home.html', u = username)
+        return render_template('home.html')
     else:
         return render_template('auth.html')
 
@@ -39,7 +39,7 @@ def authPage():
         return redirect(url_for('home'))
     elif request.form['password'] == password[0]:
         session['username'] = username
-        return render_template('home.html', u=username)
+        return render_template('home.html')
     else:
         flash('incorrect credentials')
         return redirect(url_for('home'))
@@ -78,22 +78,41 @@ def logout():
 @app.route("/all")
 def all():
     if 'username' in session:
-        return render_template('all.html', u = username)
+        return render_template('all.html')
     else:
         return redirect(url_for("home"))
 @app.route("/create",methods=['GET','POST'])
 def create():
     if 'username' in session:
-        return render_template('create.html', u = username)
+        return render_template('create.html')
     else:
         return redirect(url_for("home"))
 @app.route("/view",methods=['GET','POST'])
 def view():
     if 'username' in session:
-        name=request.form['title']
-        text=request.form['story']
-        print(name)
-        return render_template('view.html',title=name, story=text)
+
+        title = request.form["title"] #variables for code readability
+        body = request.form["body"]
+        username = session["username"]
+        #update.create(title, body, username)
+        if request.form["submit"] == "create":
+            DB_FILE="data/quackamoo.db"
+            db = sqlite3.connect(DB_FILE)
+            c = db.cursor()
+            print(title)
+            print(body)
+            command = "INSERT INTO stories VALUES('?','?')" #adds the story to the stories db
+            params =(title,body)
+            c.execute(command, params) #executes the insert story command
+            c.execute("SELECT entryId FROM logs") #selects all of the entryids
+            entryIds = c.fetchall() #stores the list of entryids as a list
+            if len(entryIds) > 0:
+                entryId = len(entryIds)#the next entryId in the logs
+            else:
+                entryId = 0
+        command2 = "INSERT INTO logs VALUES(?,?,?,?)" #updates logs
+        c.execute(command2, (entryId,username,title,body)) #executes the insert log entry command
+        return render_template('view.html',title=title, story=body)
     else:
         return redirect(url_for("home"))
 
