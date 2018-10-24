@@ -101,8 +101,8 @@ def view():
             c = db.cursor()
             print(title)
             print(body)
-            command = "INSERT INTO stories VALUES('?','?')" #adds the story to the stories db
-            params =(title,body)
+            command = "INSERT INTO stories VALUES(?,?)" #adds the story to the stories db
+            params=(title,body)
             c.execute(command, params) #executes the insert story command
             c.execute("SELECT entryId FROM logs") #selects all of the entryids
             entryIds = c.fetchall() #stores the list of entryids as a list
@@ -112,6 +112,8 @@ def view():
                 entryId = 0
         command2 = "INSERT INTO logs VALUES(?,?,?,?)" #updates logs
         c.execute(command2, (entryId,username,title,body)) #executes the insert log entry command
+        db.commit()
+        db.close()
         return render_template('view.html',title=title, story=body)
     else:
         return redirect(url_for("home"))
