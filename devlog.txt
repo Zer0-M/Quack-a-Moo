@@ -156,3 +156,8 @@ HuangA -- 2018-23-10 12:39
 Added print statements for debugging
 ==============================================================
 
+MohammedJ -- 2018-24-10 01:28
+--------------------------------------------------------------
+Fixed issues with registrations by creating sql cursor inside of the flask route it is used in.
+Login now checks credentials via the database.
+==============================================================

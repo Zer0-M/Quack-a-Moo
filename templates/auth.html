@@ -8,8 +8,10 @@
 		<h2>{{each}}<h2>
 		<br>
 {% endfor %}
-<h3>Please Sign in</h3>
+{% block heading %}<h3>Please Sign in</h3>{% endblock %}
+{% block action %}
 <form action = "/auth" method="POST">
+{% endblock %}
   Username
   <br>
   <input type = "text" name = "username">
@@ -20,17 +22,12 @@
   <br>
   <input type = "submit" name = "sub1">
 </form>
-
-<h3>Register</h3>
-<form action = "/register" method="POST">
-  Username
-  <br>
-  <input type = "text" name = "newUsername">
-  <br>
-  Password
-  <br>
-  <input type = "password" name = "newPassword">
-  <br>
-  <input type = "submit" name = "sub2">
+Or
+{% block register %}
+<form action="/reg">
+  <input type="submit" name="regbutton" value="REGISTER" formaction="/reg">
 </form>
+{% endblock %}
+
+
 {% endblock %}

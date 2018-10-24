@@ -24,16 +24,16 @@ def create():
         title = request.form["title"] #variables for code readability
         body = request.form["body"]
         username = session["username"]
-        command = "INSERT INTO stories VALUES(\"" + title "\"," + body")" #adds the story to the stories db
-        c.execute(command) #executes the insert story command
+        command = "INSERT INTO stories VALUES(?,?)" #adds the story to the stories db
+        c.execute(command,(title,body)) #executes the insert story command
         c.execute("SELECT entryId FROM logs") #selects all of the entryids
         entryIds = c.fetchall() #stores the list of entryids as a list
         if len(entryIds) > 0:
             entryId = len(entryIds)#the next entryId in the logs
         else:
             entryId = 0
-            command2 = "INSERT INTO logs VALUES(\"" + entryId + "\"," + username + "\"," + title + "\"," + body")" #updates logs
-            c.execute(command2) #executes the insert log entry command
+            command2 = "INSERT INTO logs VALUES(?,?,?,?)" #updates logs
+            c.execute(command2, (entryId,username,title,body)) #executes the insert log entry command
 
 '''
 add()
@@ -48,8 +48,8 @@ def add():
         c.execute("SELECT entryId FROM logs") #selects all of the entryids
         entryIds = c.fetchall() #stores the list of entryids as a list
         entryId = len(entryIds)#the next entryId in the logs
-        command = "INSERT INTO logs VALUES(\"" + entryId + "\"," + username + "\","+ title + "\"," +body")" #updates logs
-        c.execute(command) #executes the insert log entry command
+        command = "INSERT INTO logs VALUES(?,?,?,?)" #updates logs
+        c.execute(command, (entryId,username,title,body)) #executes the insert log entry command
         c.execute("SELECT body FROM stories WHERE stories.title ='" +title + "';")
         oldBody = c.fetchall() #stores the old body
         body = oldBody + body #updates the body
