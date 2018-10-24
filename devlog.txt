@@ -117,7 +117,7 @@ Finished all templates
 
 MohammedJ -- 2018-19-10 12:31
 --------------------------------------------------------------
-Correction to previous log entry, there was one more template required. 
+Correction to previous log entry, there was one more template required.
 Also fixed some issues that were present in the authentication code.
 ==============================================================
 
@@ -154,6 +154,12 @@ Reformated temp.py to db_updater.py
 HuangA -- 2018-23-10 12:39
 --------------------------------------------------------------
 Added print statements for debugging
+==============================================================
+
+IsaacJ -- 2018-23-10 12:42
+--------------------------------------------------------------
+Started registration functionality in app.py, but still had some issues with
+adding to the database
 ==============================================================
 
 MohammedJ -- 2018-24-10 01:28
