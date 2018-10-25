@@ -15,13 +15,16 @@
 <br>
 <h2>Stories Edited</h2>
 <ol>
-    <li>MfS</li>
+  {% for story in edited %}
+   <li><a href="/view?title={{story}}">{{story}}</a></li>
+  {% endfor %}
 </ol>
 <br>
 <h2>Best Stories</h2>
 <ol>
-    <li>Hellow orld</li>
-    <li>tells tories</li>
+   {% for story in popular %}
+   <li><a href="/edit?title={{story}}">{{story}}</a></li>
+   {% endfor %}
 </ol>
 <br>
 <h2><a href="/all">All Stories</a></h2>
