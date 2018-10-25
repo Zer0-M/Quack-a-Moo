@@ -6,8 +6,9 @@
 <h1>{% block heading %}All Stories{% endblock %}</h1>
 <h3>Sorted by last edited</h3>
 <ul>
-    <li>bill kill</li>
-    <li>ffffffffff</li>
-    <li>Wello Horld</li>
+{% for stories in storylist %}
+    <li><a href="/edit?title={{stories[0]}}">{{stories[0]}}</a></li>
+{% endfor %}
 </ul>
+
 {% endblock %}

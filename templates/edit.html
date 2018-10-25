@@ -1,12 +1,10 @@
 {% extends 'create.html' %}
 {% block head %}<title> Edit </title>{% endblock %}
-{% block content %}
     {% block heading %}
         <h1>Edit Story</h1>
     {% endblock %}
     {% block title %}
+       <h2>{{title}}<h2>
+        <h3>Last Edit</h3>
+        <p>{{story}} </p>
     {% endblock %}
-    <h2>Last Edit</h2>
-    <p> Bacon ipsum dolor amet ribeye shank chicken short loin t-bone, biltong doner sausage shoulder ground round pancetta leberkas.</p>
-
-{% endblock %}

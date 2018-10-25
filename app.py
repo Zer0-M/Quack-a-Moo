@@ -5,7 +5,6 @@ SoftDev1 pd6
 P #00: Da Art of Storytellin'
 2018-10-01
 '''
-from util import db_updater as update
 from flask import Flask,render_template,request,session,url_for,redirect,flash
 from os import urandom
 
@@ -53,11 +52,11 @@ def added():
     newPassword = request.form['password']
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor() 
-    command = 'SELECT username FROM users;'
+    command = 'SELECT username FROM users WHERE users.username = "{0}";'.format(newUsername)
     c.execute(command)
     userList = c.fetchall()
     print(userList)
-    if newUsername not in userList:
+    if userList == [] :
         insert = "INSERT INTO users VALUES(?,?)"
         params=(newUsername,newPassword)
         c.execute(insert,params)
@@ -67,7 +66,7 @@ def added():
         return redirect(url_for('home'))
     else:
         flash('Username Taken')
-        return redirect(url_for('home'))
+        return redirect(url_for('reg'))
 
 
 @app.route("/logout")
@@ -77,8 +76,15 @@ def logout():
     return redirect(url_for("home"))
 @app.route("/all")
 def all():
+    DB_FILE="data/quackamoo.db"
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    getstories="SELECT title FROM stories"
+    c.execute(getstories)
+    storylist=c.fetchall()
+    print(storylist)
     if 'username' in session:
-        return render_template('all.html')
+        return render_template('all.html',storylist=storylist)
     else:
         return redirect(url_for("home"))
 @app.route("/create",methods=['GET','POST'])
@@ -90,7 +96,7 @@ def create():
 @app.route("/view",methods=['GET','POST'])
 def view():
     if 'username' in session:
-
+        print(request.referrer)
         title = request.form["title"] #variables for code readability
         body = request.form["body"]
         username = session["username"]
@@ -117,7 +123,20 @@ def view():
         return render_template('view.html',title=title, story=body)
     else:
         return redirect(url_for("home"))
-
+@app.route("/edit")
+def edit():
+    if 'username' in session:
+        DB_FILE="data/quackamoo.db"
+        title=request.args["title"]
+        print (title)
+        db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+        c = db.cursor() 
+        command = 'SELECT text FROM logs WHERE logs.title = "{0}";'.format(title)
+        c.execute(command)
+        body=c.fetchone()[0]
+        return render_template('edit.html',title=title, story=body)
+    else:
+        return redirect(url_for("home"))
 if __name__ == '__main__':
         app.debug = True
         app.run()
