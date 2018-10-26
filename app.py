@@ -41,9 +41,14 @@ def authPage():
     elif request.form['password'] == password[0]:
         session['username'] = username
         #these lists contain titles of stories on our homepage
-        edited=[]
+        DB_FILE="data/quackamoo.db"
+        db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+        c = db.cursor()
+        command = 'SELECT title FROM logs WHERE logs.username = "{0}";'.format(username)
+        c.execute(command)
+        editedList = c.fetchall()
         most=["My frist tsory"]
-        return render_template('home.html',edited=edited, popular=most)
+        return render_template('home.html',edited=editedList, popular=most)
     else:
         flash('incorrect credentials')
         return redirect(url_for('home'))

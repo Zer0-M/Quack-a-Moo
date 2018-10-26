@@ -16,7 +16,7 @@
 <h2>Stories Edited</h2>
 <ol>
   {% for story in edited %}
-   <li><a href="/view?title={{story}}">{{story}}</a></li>
+   <li><a href="/view?title={{story[0]}}">{{story[0]}}</a></li>
   {% endfor %}
 </ol>
 <br>
