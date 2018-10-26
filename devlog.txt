@@ -175,3 +175,9 @@ KaziA -- 2018-10-25 10:24
 --------------------------------------------------------------
 Password encryption through passlib
 ==============================================================
+
+MohammedJ -- 2018-10-25 00:28
+--------------------------------------------------------------
+a list of stories edited by the user is displayed on the homepage
+database reset due to merge conflicts
+==============================================================
