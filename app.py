@@ -7,6 +7,7 @@ P #00: Da Art of Storytellin'
 '''
 from flask import Flask,render_template,request,session,url_for,redirect,flash
 from os import urandom
+from util import db_updater as update
 
 import sqlite3 #imports sqlite
 DB_FILE="data/quackamoo.db"
@@ -100,26 +101,7 @@ def view():
         title = request.form["title"] #variables for code readability
         body = request.form["body"]
         username = session["username"]
-        #update.create(title, body, username)
-        if request.form["submit"] == "create":
-            DB_FILE="data/quackamoo.db"
-            db = sqlite3.connect(DB_FILE)
-            c = db.cursor()
-            print(title)
-            print(body)
-            command = "INSERT INTO stories VALUES(?,?)" #adds the story to the stories db
-            params=(title,body)
-            c.execute(command, params) #executes the insert story command
-            c.execute("SELECT entryId FROM logs") #selects all of the entryids
-            entryIds = c.fetchall() #stores the list of entryids as a list
-            if len(entryIds) > 0:
-                entryId = len(entryIds)#the next entryId in the logs
-            else:
-                entryId = 0
-        command2 = "INSERT INTO logs VALUES(?,?,?,?)" #updates logs
-        c.execute(command2, (entryId,username,title,body)) #executes the insert log entry command
-        db.commit()
-        db.close()
+        update.create(title, body, username)
         return render_template('view.html',title=title, story=body)
     else:
         return redirect(url_for("home"))
