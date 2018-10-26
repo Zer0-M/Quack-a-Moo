@@ -8,6 +8,7 @@ P #00: Da Art of Storytellin'
 from flask import Flask,render_template,request,session,url_for,redirect,flash
 from os import urandom
 from util import db_updater as update
+from passlib.hash import sha256_crypt
 
 import sqlite3 #imports sqlite
 DB_FILE="data/quackamoo.db"
@@ -37,7 +38,7 @@ def authPage():
     if password == []:
         flash('incorrect credentials')
         return redirect(url_for('home'))
-    elif request.form['password'] == password[0]:
+    elif sha256_crypt.verify(request.form['password'], password[0]):
         session['username'] = username
         return render_template('home.html')
     else:
@@ -50,7 +51,7 @@ def reg():
 def added():
     DB_FILE="data/quackamoo.db"
     newUsername = request.form['username']
-    newPassword = request.form['password']
+    newPassword = sha256_crypt.encrypt(request.form['password'])
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor() 
     command = 'SELECT username FROM users WHERE users.username = "{0}";'.format(newUsername)

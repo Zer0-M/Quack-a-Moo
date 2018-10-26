@@ -165,3 +165,7 @@ MohammedJ -- 2018-10-24 01:11
 Edit route accessible but has no functionality
 Query strings used to get links for specific stories
 ==============================================================
+
+KaziA -- 2018-10-25 10:24
+--------------------------------------------------------------
+Password encryption through passlib
