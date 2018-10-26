@@ -20,23 +20,17 @@ create()
 This function is called when a new story is created
 It adds an entry in the logs and stories database
 '''
-def create(title, body, username ):
+def create(title, body, username):
         DB_FILE="data/quackamoo.db"
         db = sqlite3.connect(DB_FILE)
         c = db.cursor()
-        print(title)
-        print(body)
-        command = "INSERT INTO stories VALUES(?,?)" #adds the story to the stories db
-        params=(title,body)
+        storyId =  nextStory()
+        command = "INSERT INTO stories VALUES(?,?,?)" #adds the story to the stories db
+        params=(storyId,title,body)
         c.execute(command, params) #executes the insert story command
-        c.execute("SELECT entryId FROM logs") #selects all of the entryids
-        entryIds = c.fetchall() #stores the list of entryids as a list
-        if len(entryIds) > 0:
-            entryId = len(entryIds)#the next entryId in the logs
-        else:
-            entryId = 0
+        entryId = nextEntry()
         command2 = "INSERT INTO logs VALUES(?,?,?,?)" #updates logs
-        c.execute(command2, (entryId,username,title,body)) #executes the insert log entry command
+        c.execute(command2, (entryId,username,storyId,body)) #executes the insert log entry command
         db.commit()
         db.close()
 
@@ -45,28 +39,58 @@ add()
 This function is called when someone adds to a story
 it adds an entry in the logs and updates the stories database
 '''
-def add(title,body,username):
+def add(title,body,username,storyId):
+        DB_FILE="data/quackamoo.db"
+        db = sqlite3.connect(DB_FILE)
+        c = db.cursor()
+        entryId = nextEntry()    
+        command = "INSERT INTO logs VALUES(?,?,?,?)" #updates logs
+        c.execute(command, (entryId,username,title,body)) #executes the insert log entry command
+        c.execute("SELECT body FROM stories WHERE stories.title ='" +title + "';")
+        oldBody = c.fetchone()[0] #stores the old body
+        body = oldBody + body #updates the body
+        command = "UPDATE stories SET body = '" + body + "'WHERE stories.storyId ='" + storyId + "';"
+        c.execute(command) #executes the update stories command
+        db.commit()
+        db.close()
+
+'''
+nextStory()
+This function returns the maximum storyId + 1
+'''
+def nextStory():
+        DB_FILE="data/quackamoo.db"
+        db = sqlite3.connect(DB_FILE)
+        c = db.cursor()
+        c.execute("SELECT storyId FROM stories") #selects all of the entryids
+        storyIds = c.fetchall() #stores the list of entryids as a list
+        if len(storyIds) > 0:
+                storyId = len(entryIds)#the next entryId in the logs
+        else:
+                storyId = 0
+        return storyId
+
+'''
+nextEntry()
+This function returns the maximum entryId + 1
+'''
+def nextEntry():
         DB_FILE="data/quackamoo.db"
         db = sqlite3.connect(DB_FILE)
         c = db.cursor()
         c.execute("SELECT entryId FROM logs") #selects all of the entryids
         entryIds = c.fetchall() #stores the list of entryids as a list
-        entryId = len(entryIds)#the next entryId in the logs
-        command = "INSERT INTO logs VALUES(?,?,?,?)" #updates logs
-        c.execute(command, (entryId,username,title,body)) #executes the insert log entry command
-        c.execute("SELECT body FROM stories WHERE stories.title ='" +title + "';")
-        oldBody = c.fetchone()[0] #stores the old body
-        print (oldBody)
-        body = oldBody + body #updates the body
-        command = "UPDATE stories SET body = '" + body + "'WHERE stories.title ='" + title + "';"
-        c.execute(command) #executes the update stories command
-        db.commit()
-        db.close()
-    
+        if len(entryIds) > 0:
+                entryId = len(entryIds)#the next entryId in the logs
+        else:
+                entryId = 0
+        return entryId
+
+        
 def adduser(username, password):
-    command = "INSERT INTO users VALUES(" + '"' + username + '", "' + password + '")'
-    c.execute(command)
-    
+        command = "INSERT INTO users VALUES(" + '"' + username + '", "' + password + '")'
+        c.execute(command)
+        
     
     
 

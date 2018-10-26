@@ -105,6 +105,7 @@ def create():
         return render_template('create.html')
     else:
         return redirect(url_for("home"))
+    
 @app.route("/view",methods=['GET','POST'])
 def view():
     if 'username' in session:
@@ -119,11 +120,13 @@ def view():
         return render_template('view.html',title=title, story=body)
     else:
         return redirect(url_for("home"))
+    
 @app.route("/edit",methods=['GET','POST'])
 def edit():
     if 'username' in session:
         DB_FILE="data/quackamoo.db"
         title=request.args["title"]
+        storyId = request.args["storyId"]
         db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
         c = db.cursor() 
         command = 'SELECT body FROM logs WHERE logs.title = "{0}";'.format(title)
@@ -131,7 +134,7 @@ def edit():
         body=c.fetchone()[0]
         print(body)
         print(title)
-        return render_template('edit.html',title=title, story=body)
+        return render_template('edit.html',title=title, story=body, storyId = storyId)
     else:
         return redirect(url_for("home"))
 if __name__ == '__main__':

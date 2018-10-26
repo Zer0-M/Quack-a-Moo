@@ -17,11 +17,11 @@ def users(): #creates the users db
     c.execute(command)
 
 def story(): #create the story db
-    command = "CREATE TABLE stories(title TEXT, body TEXT)"
+    command = "CREATE TABLE stories(storyId INTEGER, title TEXT, body TEXT)"
     c.execute(command)
 
 def logs(): #creates the logs db
-    command = "CREATE TABLE logs(entryId INTEGER, username TEXT, title TEXT, body TEXT)"
+    command = "CREATE TABLE logs(entryId INTEGER, username TEXT, storyId INTEGER, body TEXT)"
     c.execute(command)
 
 def main(): #calls all of the functions to build the databases
