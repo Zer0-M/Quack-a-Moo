@@ -7,6 +7,8 @@ P #00: Da Art of Storytellin'
 '''
 from flask import Flask,render_template,request,session,url_for,redirect,flash
 from os import urandom
+from util import db_updater as update
+from passlib.hash import sha256_crypt
 
 import sqlite3 #imports sqlite
 DB_FILE="data/quackamoo.db"
@@ -38,7 +40,7 @@ def authPage():
     if password == []:
         flash('incorrect credentials')
         return redirect(url_for('home'))
-    elif request.form['password'] == password[0]:
+    elif sha256_crypt.verify(request.form['password'], password[0]):
         session['username'] = username
         #these lists contain titles of stories on our homepage
         DB_FILE="data/quackamoo.db"
@@ -59,7 +61,7 @@ def reg():
 def added():
     DB_FILE="data/quackamoo.db"
     newUsername = request.form['username']
-    newPassword = request.form['password']
+    newPassword = sha256_crypt.encrypt(request.form['password'])
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor() 
     command = 'SELECT username FROM users WHERE users.username = "{0}";'.format(newUsername)
@@ -110,26 +112,7 @@ def view():
         title = request.form["title"] #variables for code readability
         body = request.form["body"]
         username = session["username"]
-        #update.create(title, body, username)
-        if request.form["submit"] == "create":
-            DB_FILE="data/quackamoo.db"
-            db = sqlite3.connect(DB_FILE)
-            c = db.cursor()
-            print(title)
-            print(body)
-            command = "INSERT INTO stories VALUES(?,?)" #adds the story to the stories db
-            params=(title,body)
-            c.execute(command, params) #executes the insert story command
-            c.execute("SELECT entryId FROM logs") #selects all of the entryids
-            entryIds = c.fetchall() #stores the list of entryids as a list
-            if len(entryIds) > 0:
-                entryId = len(entryIds)#the next entryId in the logs
-            else:
-                entryId = 0
-        command2 = "INSERT INTO logs VALUES(?,?,?,?)" #updates logs
-        c.execute(command2, (entryId,username,title,body)) #executes the insert log entry command
-        db.commit()
-        db.close()
+        update.create(title, body, username)
         return render_template('view.html',title=title, story=body)
     else:
         return redirect(url_for("home"))

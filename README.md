@@ -17,6 +17,7 @@ Make sure you have __python3__ installed
     $ . quack/bin/activate # this activates the virtual environment 
     $ pip3 install wheel 
     $ pip3 install flask # since our code was written using the flask framework
+    $ pip3 install passlib #passlib is used for password encryption on the website
 ```
 
 ## How do you run

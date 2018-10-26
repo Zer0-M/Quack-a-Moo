@@ -20,10 +20,15 @@ create()
 This function is called when a new story is created
 It adds an entry in the logs and stories database
 '''
-def create(title, body, username, ):
-    if request.form["submit"] == "create": 
+def create(title, body, username ):
+        DB_FILE="data/quackamoo.db"
+        db = sqlite3.connect(DB_FILE)
+        c = db.cursor()
+        print(title)
+        print(body)
         command = "INSERT INTO stories VALUES(?,?)" #adds the story to the stories db
-        c.execute(command,(title,body)) #executes the insert story command
+        params=(title,body)
+        c.execute(command, params) #executes the insert story command
         c.execute("SELECT entryId FROM logs") #selects all of the entryids
         entryIds = c.fetchall() #stores the list of entryids as a list
         if len(entryIds) > 0:
@@ -32,6 +37,8 @@ def create(title, body, username, ):
             entryId = 0
         command2 = "INSERT INTO logs VALUES(?,?,?,?)" #updates logs
         c.execute(command2, (entryId,username,title,body)) #executes the insert log entry command
+        db.commit()
+        db.close()
 
 '''
 add()
