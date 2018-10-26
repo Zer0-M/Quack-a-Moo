@@ -21,7 +21,9 @@ app.secret_key = urandom(32)
 @app.route("/")
 def home():
     if 'username' in session:
-        return render_template('home.html')
+        edited=[]
+        most=["My frist story"]
+        return render_template('home.html',edited=edited, popular=most)
     else:
         return render_template('auth.html')
 
@@ -33,14 +35,22 @@ def authPage():
     username=request.form['username']
     command = 'SELECT password FROM users WHERE users.username = "{0}"'.format(username)
     c.execute(command)
-    password = c.fetchone()
+    password = c.fetchone()#gets the password for the user if the user is in db
     print(password[0])
     if password == []:
         flash('incorrect credentials')
         return redirect(url_for('home'))
     elif sha256_crypt.verify(request.form['password'], password[0]):
         session['username'] = username
-        return render_template('home.html')
+        #these lists contain titles of stories on our homepage
+        DB_FILE="data/quackamoo.db"
+        db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+        c = db.cursor()
+        command = 'SELECT title FROM logs WHERE logs.username = "{0}";'.format(username)
+        c.execute(command)
+        editedList = c.fetchall()
+        most=["My frist tsory"]
+        return render_template('home.html',edited=editedList, popular=most)
     else:
         flash('incorrect credentials')
         return redirect(url_for('home'))
