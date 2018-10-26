@@ -1,5 +1,6 @@
 {% extends 'create.html' %}
 {% block head %}<title> Edit </title>{% endblock %}
+{% block content %}
     {% block heading %}
         <h1>Edit Story</h1>
     {% endblock %}
@@ -7,4 +8,15 @@
        <h2>{{title}}<h2>
         <h3>Last Edit</h3>
         <p>{{story}} </p>
-    {% endblock %}
+	{% endblock %}
+	<h4>Write Some stuff</h4>
+	<form action ="/view" method = "POST">
+	  <input type="text" name="title" value ="{{title}}" readonly>
+    <textarea name= "body" rows = "10" cols ="150">Bacon ipsum dolor amet ribeye shank chicken short loin t-bone, biltong doner sausage shoulder ground round pancetta leberkas.</textarea>
+    <br>
+    <input type="submit" name="submit" value="edit">
+    <br>
+    </form>
+{% endblock %}
+	
+	

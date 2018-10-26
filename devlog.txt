@@ -171,13 +171,18 @@ removed database updating code from app.py.
 app.py now uses function from db_updater to update stories.
 ==============================================================
 
-KaziA -- 2018-10-25 10:24
+KaziA -- 2018-10-25 22:24
 --------------------------------------------------------------
 Password encryption through passlib
 ==============================================================
 
-MohammedJ -- 2018-10-25 00:28
+MohammedJ -- 2018-10-26 00:28
 --------------------------------------------------------------
 a list of stories edited by the user is displayed on the homepage
 database reset due to merge conflicts
+==============================================================
+
+HuangA -- 2018-10-26 08:23
+--------------------------------------------------------------
+Added editing a story functionality
 ==============================================================

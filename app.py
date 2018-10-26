@@ -108,25 +108,29 @@ def create():
 @app.route("/view",methods=['GET','POST'])
 def view():
     if 'username' in session:
-        print(request.referrer)
-        title = request.form["title"] #variables for code readability
+        #variables for code readability
+        title = request.form["title"]
         body = request.form["body"]
         username = session["username"]
-        update.create(title, body, username)
+        if request.form["submit"] == "create":
+            update.create(title, body, username)
+        elif request.form["submit"] == "edit": 
+            update.add(title,body,username)
         return render_template('view.html',title=title, story=body)
     else:
         return redirect(url_for("home"))
-@app.route("/edit")
+@app.route("/edit",methods=['GET','POST'])
 def edit():
     if 'username' in session:
         DB_FILE="data/quackamoo.db"
         title=request.args["title"]
-        print (title)
         db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
         c = db.cursor() 
-        command = 'SELECT text FROM logs WHERE logs.title = "{0}";'.format(title)
+        command = 'SELECT body FROM logs WHERE logs.title = "{0}";'.format(title)
         c.execute(command)
         body=c.fetchone()[0]
+        print(body)
+        print(title)
         return render_template('edit.html',title=title, story=body)
     else:
         return redirect(url_for("home"))

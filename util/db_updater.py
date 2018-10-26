@@ -45,21 +45,23 @@ add()
 This function is called when someone adds to a story
 it adds an entry in the logs and updates the stories database
 '''
-def add():
-    if request.form["submit"] == "add":
-        title = request.form["title"] #variables for code readability
-        body = request.form["body"]
-        username = session["username"]
+def add(title,body,username):
+        DB_FILE="data/quackamoo.db"
+        db = sqlite3.connect(DB_FILE)
+        c = db.cursor()
         c.execute("SELECT entryId FROM logs") #selects all of the entryids
         entryIds = c.fetchall() #stores the list of entryids as a list
         entryId = len(entryIds)#the next entryId in the logs
         command = "INSERT INTO logs VALUES(?,?,?,?)" #updates logs
         c.execute(command, (entryId,username,title,body)) #executes the insert log entry command
         c.execute("SELECT body FROM stories WHERE stories.title ='" +title + "';")
-        oldBody = c.fetchall() #stores the old body
+        oldBody = c.fetchone()[0] #stores the old body
+        print (oldBody)
         body = oldBody + body #updates the body
         command = "UPDATE stories SET body = '" + body + "'WHERE stories.title ='" + title + "';"
         c.execute(command) #executes the update stories command
+        db.commit()
+        db.close()
     
 def adduser(username, password):
     command = "INSERT INTO users VALUES(" + '"' + username + '", "' + password + '")'
