@@ -46,7 +46,7 @@ def authPage():
         DB_FILE="data/quackamoo.db"
         db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
         c = db.cursor()
-        command = 'SELECT title FROM logs WHERE logs.username = "{0}";'.format(username)
+        command = 'SELECT storyId,title FROM logs WHERE logs.username = "{0}";'.format(username)
         c.execute(command)
         editedList = c.fetchall()
         most=["My frist tsory"]
@@ -91,10 +91,9 @@ def all():
     DB_FILE="data/quackamoo.db"
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    getstories="SELECT title FROM stories"
+    getstories="SELECT title,storyId FROM stories"
     c.execute(getstories)
     storylist=c.fetchall()
-    print(storylist)
     if 'username' in session:
         return render_template('all.html',storylist=storylist)
     else:

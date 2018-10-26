@@ -7,7 +7,7 @@
 <h3>Sorted by last edited</h3>
 <ul>
 {% for stories in storylist %}
-    <li><a href="/edit?title={{stories[0]}}">{{stories[0]}}</a></li>
+    <li><a href="/edit?title={{stories[0]}}&storyId={{stories[1]}}">{{stories[0]}}</a></li>
 {% endfor %}
 </ul>
 

@@ -16,14 +16,14 @@
 <h2>Stories Edited</h2>
 <ol>
   {% for story in edited %}
-   <li><a href="/view?title={{story[0]}}">{{story[0]}}</a></li>
+   <li><a href="/view?storyId={{story[0]}}">{{story[1]}}</a></li>
   {% endfor %}
 </ol>
 <br>
 <h2>Best Stories</h2>
 <ol>
    {% for story in popular %}
-   <li><a href="/edit?title={{story}}&storyId={{storyId}}">{{story}}</a></li>
+   <li><a href="/edit?title={{story}}">{{story}}</a></li>
    {% endfor %}
 </ol>
 <br>

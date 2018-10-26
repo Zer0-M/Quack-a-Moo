@@ -29,8 +29,8 @@ def create(title, body, username):
         params=(storyId,title,body)
         c.execute(command, params) #executes the insert story command
         entryId = nextEntry()
-        command2 = "INSERT INTO logs VALUES(?,?,?,?)" #updates logs
-        c.execute(command2, (entryId,username,storyId,body)) #executes the insert log entry command
+        command2 = "INSERT INTO logs VALUES(?,?,?,?,?)" #updates logs
+        c.execute(command2, (entryId,username,storyId,title,body)) #executes the insert log entry command
         db.commit()
         db.close()
 
