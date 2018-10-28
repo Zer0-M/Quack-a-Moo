@@ -9,11 +9,6 @@ P #00: Da Art of Storytellin'
 
 import sqlite3
 from flask import request,session
-DB_FILE = "./data/quackamoo.db"
-
-db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-c = db.cursor() #facilitates db operations
-
 
 '''
 create()
@@ -88,10 +83,19 @@ def nextEntry(storyId):
                 entryId = 0
         return entryId
 
-        
+'''
+addUser(username,password)
+inserts username and password into the users database
+'''
 def adduser(username, password):
-        command = "INSERT INTO users VALUES(" + '"' + username + '", "' + password + '")'
-        c.execute(command)
+        DB_FILE="data/quackamoo.db"
+        db = sqlite3.connect(DB_FILE)
+        c = db.cursor()
+        insert = "INSERT INTO users VALUES(?,?)"
+        params=(username,password)
+        c.execute(insert,params)
+        db.commit()
+        db.close()
         
     
     
