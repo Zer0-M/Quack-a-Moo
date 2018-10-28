@@ -18,8 +18,8 @@ def body(storyId):
     DB_FILE = "./data/quackamoo.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor() #facilitates db operations
-    command = 'SELECT body FROM stories WHERE stories.storyId = "{0}";'.format(storyId)
-    c.execute(command)
+    get_stories = 'SELECT body FROM stories WHERE stories.storyId = (?);'
+    c.execute(get_stories,(storyId,))
     body=c.fetchone()[0]
     return body
 
@@ -31,8 +31,8 @@ def edited(username):
     DB_FILE="data/quackamoo.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()
-    command = 'SELECT storyId,title FROM logs WHERE logs.username = "{0}";'.format(username)
-    c.execute(command)
+    list_stories = 'SELECT storyId,title FROM logs WHERE logs.username = (?) ORDER BY title;'
+    c.execute(list_stories,(username,))
     editedList = c.fetchall()
     return editedList
 
@@ -45,8 +45,8 @@ def password(username):
     DB_FILE="data/quackamoo.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()
-    command = 'SELECT password FROM users WHERE users.username = "{0}"'.format(username)
-    c.execute(command)
+    get_password = 'SELECT password FROM users WHERE users.username = (?)'
+    c.execute(get_password,(username,))
     password = c.fetchone()
     return password
 
@@ -59,8 +59,8 @@ def username(username):
     DB_FILE="data/quackamoo.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor() 
-    command = 'SELECT username FROM users WHERE users.username = "{0}";'.format(username)
-    c.execute(command)
+    user_exists = 'SELECT username FROM users WHERE users.username = (?);'
+    c.execute(user_exists,(username,))
     userList = c.fetchall()
     return userList
 
@@ -87,11 +87,18 @@ def text(storyId):
     DB_FILE="data/quackamoo.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()
-    command =  "SELECT entryId FROM logs WHERE storyId = (?)" #selects all of the entryids
-    c.execute(command,storyId)
-    entryIds = c.fetchall()
-    last=entryIds[len(entryIds)-1][0]
-    command2 = 'SELECT body FROM logs WHERE entryId = (?);'
-    c.execute(command2,[str(last)])
+    get_story = 'SELECT body FROM logs WHERE storyId = (?) ORDER BY entryId DESC;'
+    c.execute(get_story,(storyId,))
     text=c.fetchone()[0]
+    print(text)
+
     return text
+
+def all():
+    DB_FILE="data/quackamoo.db"
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    getstories="SELECT title,storyId FROM stories"
+    c.execute(getstories)
+    storylist=c.fetchall()
+    return storylist

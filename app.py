@@ -17,9 +17,10 @@ app.secret_key = urandom(32)
 
 @app.route("/")
 def home():
-    if "logoutbutton" in request.args:
-        session.pop('username')
     if 'username' in session:
+        if "logoutbutton" in request.args:
+            session.pop('username')
+            return redirect(url_for('home'))
         username = session['username']
         editedList = search.edited(username)
         most=[]
@@ -60,21 +61,10 @@ def added():
         flash('Username Taken')
         return redirect(url_for('reg'))
 
-
-#@app.route("/logout")
-#def logout():
-#   if 'username' in session:
-#        session.pop('username')
-#    return redirect(url_for("home"))
 @app.route("/all")
 def all():
-    DB_FILE="data/quackamoo.db"
-    db = sqlite3.connect(DB_FILE)
-    c = db.cursor()
-    getstories="SELECT title,storyId FROM stories"
-    c.execute(getstories)
-    storylist=c.fetchall()
     if 'username' in session:
+        storylist=search.all()
         return render_template('all.html',storylist=storylist)
     else:
         return redirect(url_for("home"))
@@ -101,7 +91,7 @@ def view():
             if "submit" in request.form:
                 body=request.form["body"]
                 update.add(title,body,username,storyId) 
-                body=search.body(storyId)
+            body=search.body(storyId)
         return render_template('view.html',title=title, story=body)
     else:
         return redirect(url_for("home"))

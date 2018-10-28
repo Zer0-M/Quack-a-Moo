@@ -20,12 +20,12 @@ def create(title, body, username):
         db = sqlite3.connect(DB_FILE)
         c = db.cursor()
         storyId =  nextStory()
-        command = "INSERT INTO stories VALUES(?,?,?)" #adds the story to the stories db
+        stories_insert = "INSERT INTO stories VALUES(?,?,?)" #adds the story to the stories db
         params=(storyId,title,body)
-        c.execute(command, params) #executes the insert story command
+        c.execute(stories_insert, params) #executes the insert story command
         entryId = 0
-        command2 = "INSERT INTO logs VALUES(?,?,?,?,?)" #updates logs
-        c.execute(command2, (entryId,username,storyId,title,body)) #executes the insert log entry command
+        log_insert = "INSERT INTO logs VALUES(?,?,?,?,?)" #updates logs
+        c.execute(log_insert, (entryId,username,storyId,title,body)) #executes the insert log entry command
         db.commit()
         db.close()
 
@@ -45,9 +45,8 @@ def add(title,body,username,storyId):
         c.execute(get_story,(title,))
         oldBody = c.fetchone()[0] #stores the old body
         body = oldBody + body #updates the body
-        command = "UPDATE stories SET body = (?) WHERE stories.storyId = (?) ;"
-        print(command)
-        c.execute(command,(body,storyId))
+        update = "UPDATE stories SET body = (?) WHERE stories.storyId = (?) ;"
+        c.execute(update,(body,storyId))
         db.commit()
         db.close()
 
@@ -83,8 +82,6 @@ def nextEntry(storyId):
         else:
                 entryId = 0
         return entryId
-<<<<<<< HEAD
-=======
 
 '''
 addUser(username,password)
@@ -99,7 +96,6 @@ def adduser(username, password):
         c.execute(insert,params)
         db.commit()
         db.close()
->>>>>>> 4d7b8932771cdeeeed3b88d656133097b5cb0864
         
     
     
