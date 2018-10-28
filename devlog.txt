@@ -193,3 +193,8 @@ Stories can be added to properly
 Entryids in logs are now specefic to each story
 Some changes in templates for better formatting
 ==============================================================
+
+HuangA-- 2018-10-28 11:54
+--------------------------------------------------------------
+Moved all of the Sqlite code out of the app.py file
+==============================================================

@@ -8,13 +8,10 @@ P #00: Da Art of Storytellin'
 from flask import Flask,render_template,request,session,url_for,redirect,flash
 from os import urandom
 from util import db_updater as update
+from util import db_search as search
 from passlib.hash import sha256_crypt
 
 import sqlite3 #imports sqlite
-DB_FILE="data/quackamoo.db"
-db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-c = db.cursor() #facilitates db operations
-
 app = Flask(__name__)
 app.secret_key = urandom(32)
 
@@ -24,12 +21,7 @@ def home():
         session.pop('username')
     if 'username' in session:
         username = session['username']
-        DB_FILE="data/quackamoo.db"
-        db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-        c = db.cursor()
-        command = 'SELECT storyId,title FROM logs WHERE logs.username = "{0}";'.format(username)
-        c.execute(command)
-        editedList = c.fetchall()
+        editedList = search.edited(username)
         most=[]
         return render_template('home.html',edited=editedList, popular=most)
     else:
@@ -37,52 +29,32 @@ def home():
 
 @app.route("/auth",methods=['GET','POST'])
 def authPage():
-    DB_FILE="data/quackamoo.db"
-    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-    c = db.cursor() 
     username=request.form['username']
-    command = 'SELECT password FROM users WHERE users.username = "{0}"'.format(username)
-    c.execute(command)
-    password = c.fetchone()#gets the password for the user if the user is in db
-    print(password)
+    password = search.password(username)
     if password == None:
         flash('incorrect credentials')
         return redirect(url_for('home'))
     elif sha256_crypt.verify(request.form['password'], password[0]):
         session['username'] = username
-        #these lists contain titles of stories on our homepage
-        DB_FILE="data/quackamoo.db"
-        db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-        c = db.cursor()
-        command = 'SELECT storyId,title FROM logs WHERE logs.username = "{0}";'.format(username)
-        c.execute(command)
-        editedList = c.fetchall()
+        editedList = search.edited(username)
         most=[]
         return render_template('home.html',edited=editedList, popular=most)
     else:
         flash('incorrect credentials')
         return redirect(url_for('home'))
+    
 @app.route("/reg",methods=['GET','POST'])
 def reg():
     return render_template('reg.html')
+
 @app.route("/added",methods=['GET','POST'])
 def added():
-    DB_FILE="data/quackamoo.db"
     newUsername = request.form['username']
     newPassword = sha256_crypt.encrypt(request.form['password'])
-    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-    c = db.cursor() 
-    command = 'SELECT username FROM users WHERE users.username = "{0}";'.format(newUsername)
-    c.execute(command)
-    userList = c.fetchall()
+    userList = search.username(newUsername)
     print(userList)
     if userList == [] :
-        insert = "INSERT INTO users VALUES(?,?)"
-        params=(newUsername,newPassword)
-        c.execute(insert,params)
-        db.commit()
-        db.close()
-        #session['username'] = newUsername
+        update.adduser(newUsername,newPassword)
         return redirect(url_for('home'))
     else:
         flash('Username Taken')
@@ -106,6 +78,7 @@ def all():
         return render_template('all.html',storylist=storylist)
     else:
         return redirect(url_for("home"))
+    
 @app.route("/create",methods=['GET','POST'])
 def create():
     if 'username' in session:
@@ -128,14 +101,7 @@ def view():
             if "submit" in request.form:
                 body=request.form["body"]
                 update.add(title,body,username,storyId) 
-            DB_FILE="data/quackamoo.db"
-            db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-            c = db.cursor() 
-            print(title,storyId)
-            command = 'SELECT body FROM stories WHERE stories.title = "{0}" AND stories.storyId ="{1}";'.format(title,storyId)
-            c.execute(command)
-            body=c.fetchone()[0]
-            print(body)
+                body=search.body(storyId)
         return render_template('view.html',title=title, story=body)
     else:
         return redirect(url_for("home"))
@@ -143,31 +109,17 @@ def view():
 @app.route("/edit",methods=['GET','POST'])
 def edit():
     if 'username' in session:
-        DB_FILE="data/quackamoo.db"
         title=request.args["title"]
         storyId = request.args["storyId"]
-        db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-        c = db.cursor() 
         username = session["username"]
-        check="SELECT storyId FROM logs WHERE username = (?) AND storyId=(?);"
-        c.execute(check,(username,storyId))
-        edited=c.fetchone()#this variable is used to check if a user has edited a story, if its empty the user has not edited it
-        print(edited)
-        if edited != None :
-           flash("Already edited view from home page")
-           return redirect(url_for("home")) 
-        c.execute("SELECT entryId FROM logs") #selects all of the entryids
-        entryIds = c.fetchall()
-        print(entryIds)
-        last=entryIds[len(entryIds)-1][0]
-        command = 'SELECT body FROM logs WHERE logs.title = "{0}" AND logs.entryId= {1};'.format(title,last)
-        c.execute(command)
-        body=c.fetchone()[0]
-        print(body)
-        print(title)
+        edit=search.edit(username,storyId)#this variable is used to check if a user has edited a story, if its empty the user has not edited it
+        if edit != None :
+            flash("Already edited. View from home page")
+            return redirect(url_for("home"))
+        body=search.text(storyId)
         return render_template('edit.html',title=title, story=body, storyId = storyId)
     else:
         return redirect(url_for("home"))
 if __name__ == '__main__':
-        app.debug = True
-        app.run()
+    app.debug = True
+    app.run()
