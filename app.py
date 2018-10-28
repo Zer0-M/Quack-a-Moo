@@ -35,13 +35,13 @@ def home():
         c.execute(command)
         most = []
         temp = c.fetchall()
-        most[0] = temp[0]
-        prev = temp[0][title]
-        print[0]
+        most.append(temp[0])
+        prev = temp[0][0]
+        print("\n\n\n\n\n\n\n\n")
         for story in temp:
-            print("one")
-            if story[title] != prev:
-                print("two")
+            print(story[0])
+            if story[0] != prev:
+                print(story[0])
                 most.append(story)
         return render_template('home.html',edited=editedList, popular=most)
     else:
@@ -69,7 +69,21 @@ def authPage():
         command = 'SELECT storyId,title FROM logs WHERE logs.username = "{0}";'.format(username)
         c.execute(command)
         editedList = c.fetchall()
-        most=[]
+        
+        temp = []
+        command = 'SELECT storyId,title FROM logs ORDER BY entryId;'
+        c.execute(command)
+        most = []
+        temp = c.fetchall()
+        most.append(temp[0])
+        prev = temp[0][0]
+        print("\n\n\n\n\n\n\n\n")
+        for story in temp:
+            print(story[0])
+            if story[0] != prev:
+                print(story[0])
+                most.append(story)
+                prev = story[0]
         return render_template('home.html',edited=editedList, popular=most)
     else:
         flash('incorrect credentials')
