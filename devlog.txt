@@ -215,3 +215,8 @@ MohammedJ -- 2018-10-28 19:11
 Edited readme to explain the necessity of passlib 
 updated design doc to reflect current state of project
 ==============================================================
+
+MohammedJ -- 2018-10-28 19:54
+--------------------------------------------------------------
+Fixed the best stories function that Ahnaf was working on
+==============================================================
