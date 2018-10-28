@@ -94,6 +94,10 @@ def text(storyId):
 
     return text
 
+'''
+all()
+returns a list of all of the stories
+'''
 def all():
     DB_FILE="data/quackamoo.db"
     db = sqlite3.connect(DB_FILE)

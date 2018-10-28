@@ -7,7 +7,7 @@ P #00: Da Art of Storytellin'
 
 import sqlite3 #imports sqlite
 
-DB_FILE="../data/quackamoo.db" 
+DB_FILE="./data/quackamoo.db" 
 
 db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
 c = db.cursor() #facilitates db operations
