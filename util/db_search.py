@@ -114,9 +114,6 @@ def best():
     DB_FILE="data/quackamoo.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()
-    command = 'SELECT storyId,title FROM logs WHERE logs.username = "{0}";'.format(username)
-    c.execute(command)
-    editedList = c.fetchall()
     top_3 = 'SELECT entryId,storyId,title FROM logs GROUP BY storyId ORDER BY entryId DESC LIMIT 0,3;'#GROUP BY removes duplicates, LIMIT makes sure the top 3 stories are displayed
     c.execute(top_3)
     most = []
