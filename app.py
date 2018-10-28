@@ -20,10 +20,18 @@ app.secret_key = urandom(32)
 
 @app.route("/")
 def home():
+    if "logoutbutton" in request.args:
+        session.pop('username')
     if 'username' in session:
-        edited=[]
-        most=["My frist story"]
-        return render_template('home.html',edited=edited, popular=most)
+        username = session['username']
+        DB_FILE="data/quackamoo.db"
+        db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+        c = db.cursor()
+        command = 'SELECT storyId,title FROM logs WHERE logs.username = "{0}";'.format(username)
+        c.execute(command)
+        editedList = c.fetchall()
+        most=[]
+        return render_template('home.html',edited=editedList, popular=most)
     else:
         return render_template('auth.html')
 
@@ -36,8 +44,8 @@ def authPage():
     command = 'SELECT password FROM users WHERE users.username = "{0}"'.format(username)
     c.execute(command)
     password = c.fetchone()#gets the password for the user if the user is in db
-    print(password[0])
-    if password == []:
+    print(password)
+    if password == None:
         flash('incorrect credentials')
         return redirect(url_for('home'))
     elif sha256_crypt.verify(request.form['password'], password[0]):
@@ -49,7 +57,7 @@ def authPage():
         command = 'SELECT storyId,title FROM logs WHERE logs.username = "{0}";'.format(username)
         c.execute(command)
         editedList = c.fetchall()
-        most=["My frist tsory"]
+        most=[]
         return render_template('home.html',edited=editedList, popular=most)
     else:
         flash('incorrect credentials')
@@ -81,11 +89,11 @@ def added():
         return redirect(url_for('reg'))
 
 
-@app.route("/logout")
-def logout():
-    if 'username' in session:
-        session.pop('username')
-    return redirect(url_for("home"))
+#@app.route("/logout")
+#def logout():
+#   if 'username' in session:
+#        session.pop('username')
+#    return redirect(url_for("home"))
 @app.route("/all")
 def all():
     DB_FILE="data/quackamoo.db"
@@ -109,13 +117,25 @@ def create():
 def view():
     if 'username' in session:
         #variables for code readability
-        title = request.form["title"]
-        body = request.form["body"]
         username = session["username"]
-        if request.form["submit"] == "create":
+        if request.referrer == "http://127.0.0.1:5000/create":
+            title = request.form["title"]
+            body = request.form["body"]
             update.create(title, body, username)
-        elif request.form["submit"] == "edit": 
-            update.add(title,body,username)
+        else:
+            title = request.args["title"]
+            storyId= request.args["storyId"] 
+            if "submit" in request.form:
+                body=request.form["body"]
+                update.add(title,body,username,storyId) 
+            DB_FILE="data/quackamoo.db"
+            db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+            c = db.cursor() 
+            print(title,storyId)
+            command = 'SELECT body FROM stories WHERE stories.title = "{0}" AND stories.storyId ="{1}";'.format(title,storyId)
+            c.execute(command)
+            body=c.fetchone()[0]
+            print(body)
         return render_template('view.html',title=title, story=body)
     else:
         return redirect(url_for("home"))
@@ -128,7 +148,19 @@ def edit():
         storyId = request.args["storyId"]
         db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
         c = db.cursor() 
-        command = 'SELECT body FROM logs WHERE logs.title = "{0}";'.format(title)
+        username = session["username"]
+        check="SELECT storyId FROM logs WHERE username = (?) AND storyId=(?);"
+        c.execute(check,(username,storyId))
+        edited=c.fetchone()#this variable is used to check if a user has edited a story, if its empty the user has not edited it
+        print(edited)
+        if edited != None :
+           flash("Already edited view from home page")
+           return redirect(url_for("home")) 
+        c.execute("SELECT entryId FROM logs") #selects all of the entryids
+        entryIds = c.fetchall()
+        print(entryIds)
+        last=entryIds[len(entryIds)-1][0]
+        command = 'SELECT body FROM logs WHERE logs.title = "{0}" AND logs.entryId= {1};'.format(title,last)
         c.execute(command)
         body=c.fetchone()[0]
         print(body)

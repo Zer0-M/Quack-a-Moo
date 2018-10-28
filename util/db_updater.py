@@ -28,7 +28,7 @@ def create(title, body, username):
         command = "INSERT INTO stories VALUES(?,?,?)" #adds the story to the stories db
         params=(storyId,title,body)
         c.execute(command, params) #executes the insert story command
-        entryId = nextEntry()
+        entryId = 0
         command2 = "INSERT INTO logs VALUES(?,?,?,?,?)" #updates logs
         c.execute(command2, (entryId,username,storyId,title,body)) #executes the insert log entry command
         db.commit()
@@ -43,14 +43,15 @@ def add(title,body,username,storyId):
         DB_FILE="data/quackamoo.db"
         db = sqlite3.connect(DB_FILE)
         c = db.cursor()
-        entryId = nextEntry()    
-        command = "INSERT INTO logs VALUES(?,?,?,?)" #updates logs
-        c.execute(command, (entryId,username,title,body)) #executes the insert log entry command
+        entryId = nextEntry(storyId)    
+        command = "INSERT INTO logs VALUES(?,?,?,?,?)" #updates logs
+        c.execute(command, (entryId,username,storyId,title,body)) #executes the insert log entry command
         c.execute("SELECT body FROM stories WHERE stories.title ='" +title + "';")
         oldBody = c.fetchone()[0] #stores the old body
         body = oldBody + body #updates the body
-        command = "UPDATE stories SET body = '" + body + "'WHERE stories.storyId ='" + storyId + "';"
-        c.execute(command) #executes the update stories command
+        command = "UPDATE stories SET body = (?) WHERE stories.storyId = (?) ;"
+        print(command)
+        c.execute(command,(body,storyId))
         db.commit()
         db.close()
 
@@ -65,7 +66,7 @@ def nextStory():
         c.execute("SELECT storyId FROM stories") #selects all of the entryids
         storyIds = c.fetchall() #stores the list of entryids as a list
         if len(storyIds) > 0:
-                storyId = len(entryIds)#the next entryId in the logs
+                storyId = len(storyIds)#the next entryId in the logs
         else:
                 storyId = 0
         return storyId
@@ -74,11 +75,12 @@ def nextStory():
 nextEntry()
 This function returns the maximum entryId + 1
 '''
-def nextEntry():
+def nextEntry(storyId):
         DB_FILE="data/quackamoo.db"
         db = sqlite3.connect(DB_FILE)
         c = db.cursor()
-        c.execute("SELECT entryId FROM logs") #selects all of the entryids
+        select="SELECT entryId FROM logs WHERE logs.storyId='{0}'".format(storyId)
+        c.execute(select) #selects all of the entryids
         entryIds = c.fetchall() #stores the list of entryids as a list
         if len(entryIds) > 0:
                 entryId = len(entryIds)#the next entryId in the logs

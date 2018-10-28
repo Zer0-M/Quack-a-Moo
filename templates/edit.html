@@ -2,7 +2,7 @@
 {% block head %}<title> Edit </title>{% endblock %}
 {% block content %}
     {% block heading %}
-        <h1>Edit Story</h1>
+        <h1 align=center>Edit Story</h1>
     {% endblock %}
     {% block title %}
        <h2>{{title}}<h2>
@@ -10,13 +10,10 @@
         <p>{{story}} </p>
 	{% endblock %}
 	<h4>Write Some stuff</h4>
-	<form action ="/view" method = "POST">
-	  <input type="text" name="title" value ="{{title}}" readonly>
-	  <br>
+	<form action ="/view?title={{title}}&storyId={{storyId}}" method = "POST">
     <textarea name= "body" rows = "10" cols ="150">Bacon ipsum dolor amet ribeye shank chicken short loin t-bone, biltong doner sausage shoulder ground round pancetta leberkas.</textarea>
     <br>
-    <input type="submit" name="submit" value="edit">
-    <input type="storyId" name="storyId" value="{{storyId}}" readonly>
+    <input type="submit" name="submit" value="add">
     <br>
     </form>
 {% endblock %}

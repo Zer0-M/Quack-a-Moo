@@ -12,10 +12,11 @@
 
   <body>
     {% block navbar %}
-    <a href="/"> Home </a>
-    <form action="/logout">
-      <input type="submit" name="logoutbutton" value="logout">
+    <form action="/">
+      <input type="submit" name="home_Button" value="Home">
+      <input type="submit" name="logoutbutton" value="Logout">
     </form>
+    <hr>
     {% endblock %}
 	  {% block content %}
 	  CONTENT
