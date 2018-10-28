@@ -30,19 +30,14 @@ def home():
         command = 'SELECT storyId,title FROM logs WHERE logs.username = "{0}";'.format(username)
         c.execute(command)
         editedList = c.fetchall()
-        temp = []
-        command = 'SELECT storyId,title FROM logs ORDER BY entryId;'
-        c.execute(command)
+        top_3 = 'SELECT entryId,storyId,title FROM logs GROUP BY storyId ORDER BY entryId DESC LIMIT 0,3;'#GROUP BY removes duplicates, LIMIT makes sure the top 3 stories are displayed
+        c.execute(top_3)
         most = []
         temp = c.fetchall()
-        most.append(temp[0])
-        prev = temp[0][0]
-        print("\n\n\n\n\n\n\n\n")
-        for story in temp:
-            print(story[0])
-            if story[0] != prev:
-                print(story[0])
-                most.append(story)
+        i=0
+        while i<3:
+            most.append(temp[i][2])
+            i=i+1
         return render_template('home.html',edited=editedList, popular=most)
     else:
         return render_template('auth.html')
@@ -69,21 +64,14 @@ def authPage():
         command = 'SELECT storyId,title FROM logs WHERE logs.username = "{0}";'.format(username)
         c.execute(command)
         editedList = c.fetchall()
-        
-        temp = []
-        command = 'SELECT storyId,title FROM logs ORDER BY entryId;'
-        c.execute(command)
+        top_3 = 'SELECT entryId,storyId,title FROM logs GROUP BY storyId ORDER BY entryId DESC LIMIT 0,3;'#GROUP BY removes duplicates, LIMIT makes sure the top 3 stories are displayed
+        c.execute(top_3)
         most = []
         temp = c.fetchall()
-        most.append(temp[0])
-        prev = temp[0][0]
-        print("\n\n\n\n\n\n\n\n")
-        for story in temp:
-            print(story[0])
-            if story[0] != prev:
-                print(story[0])
-                most.append(story)
-                prev = story[0]
+        i=0
+        while i<3:
+            most.append(temp[i][2])
+            i=i+1
         return render_template('home.html',edited=editedList, popular=most)
     else:
         flash('incorrect credentials')
