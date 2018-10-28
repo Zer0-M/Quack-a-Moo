@@ -186,3 +186,10 @@ HuangA -- 2018-10-26 08:23
 --------------------------------------------------------------
 Added editing a story functionality
 ==============================================================
+
+MohammedJ -- 2018-10-27 20:56
+--------------------------------------------------------------
+Stories can be added to properly
+Entryids in logs are now specefic to each story
+Some changes in templates for better formatting
+==============================================================
