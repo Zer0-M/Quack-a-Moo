@@ -212,6 +212,6 @@ Commented the code
 
 MohammedJ -- 2018-10-28 19:11
 --------------------------------------------------------------
-Edited readme to 
+Edited readme to explain the necessity of passlib 
 updated design doc to reflect current state of project
 ==============================================================
