@@ -30,7 +30,19 @@ def home():
         command = 'SELECT storyId,title FROM logs WHERE logs.username = "{0}";'.format(username)
         c.execute(command)
         editedList = c.fetchall()
-        most=[]
+        temp = []
+        command = 'SELECT storyId,title FROM logs ORDER BY entryId;'
+        c.execute(command)
+        most = []
+        temp = c.fetchall()
+        most[0] = temp[0]
+        prev = temp[0][title]
+        print[0]
+        for story in temp:
+            print("one")
+            if story[title] != prev:
+                print("two")
+                most.append(story)
         return render_template('home.html',edited=editedList, popular=most)
     else:
         return render_template('auth.html')
