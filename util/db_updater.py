@@ -44,9 +44,10 @@ def add(title,body,username,storyId):
         db = sqlite3.connect(DB_FILE)
         c = db.cursor()
         entryId = nextEntry(storyId)    
-        command = "INSERT INTO logs VALUES(?,?,?,?,?)" #updates logs
-        c.execute(command, (entryId,username,storyId,title,body)) #executes the insert log entry command
-        c.execute("SELECT body FROM stories WHERE stories.title ='" +title + "';")
+        insert = "INSERT INTO logs VALUES(?,?,?,?,?)" #updates logs
+        c.execute(insert, (entryId,username,storyId,title,body)) #executes the insert log entry command
+        get_story="SELECT body FROM stories WHERE stories.title =(?);"
+        c.execute(get_story,(title,))
         oldBody = c.fetchone()[0] #stores the old body
         body = oldBody + body #updates the body
         command = "UPDATE stories SET body = (?) WHERE stories.storyId = (?) ;"
@@ -79,19 +80,14 @@ def nextEntry(storyId):
         DB_FILE="data/quackamoo.db"
         db = sqlite3.connect(DB_FILE)
         c = db.cursor()
-        select="SELECT entryId FROM logs WHERE logs.storyId='{0}'".format(storyId)
-        c.execute(select) #selects all of the entryids
+        select="SELECT entryId FROM logs WHERE logs.storyId=(?)"
+        c.execute(select,(storyId,)) #selects all of the entryids
         entryIds = c.fetchall() #stores the list of entryids as a list
         if len(entryIds) > 0:
                 entryId = len(entryIds)#the next entryId in the logs
         else:
                 entryId = 0
         return entryId
-
-        
-def adduser(username, password):
-        command = "INSERT INTO users VALUES(" + '"' + username + '", "' + password + '")'
-        c.execute(command)
         
     
     
