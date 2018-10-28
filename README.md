@@ -23,7 +23,6 @@ Make sure you have __python3__ installed
 ```
 
 ### Why Passlib
-
     Link to the Passlib Documentation:https://passlib.readthedocs.io/en/stable/<br/>
     Passlib encrypts a password by hashing it and can also decrypt it for later verification.
     We decided to use this module as we thought any website that requires authentication, should not make passwords easily available to everyone who clones the repository.
