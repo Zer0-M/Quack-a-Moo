@@ -35,7 +35,7 @@ def home():
             return redirect(url_for('home'))
         username = session['username']
         editedList = search.edited(username)
-        most=[]
+        most=search.best()
         return render_template('home.html',edited=editedList, popular=most)
     else:
         return render_template('auth.html')
@@ -54,7 +54,8 @@ def authPage():
     elif sha256_crypt.verify(request.form['password'], password[0]): #if password is correct, login
         session['username'] = username
         editedList = search.edited(username)
-        most=[]
+        #these lists contain titles of stories on our homepage
+        most=search.best()
         return render_template('home.html',edited=editedList, popular=most)
     else: #else credentials are wrong
         flash('incorrect credentials')
