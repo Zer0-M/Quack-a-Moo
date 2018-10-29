@@ -90,8 +90,6 @@ def text(storyId):
     get_story = 'SELECT body FROM logs WHERE storyId = (?) ORDER BY entryId DESC;'
     c.execute(get_story,(storyId,))
     text=c.fetchone()[0]
-    print(text)
-
     return text
 
 '''
@@ -106,7 +104,7 @@ def all():
     c.execute(getstories)
     storylist=c.fetchall()
     return storylist
-    
+
 '''
 best()
 returns a the top 3 stories based on the number of edits
@@ -123,7 +121,6 @@ def best():
     while i<3:
         most.append(temp[i])
         i=i+1
-    print(most)
     return most
 
 '''
