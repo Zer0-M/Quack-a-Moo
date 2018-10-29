@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html>
-  
+
   <head>
     {% block head %}
     <title> {% block title %} {% endblock %}
@@ -16,6 +16,11 @@
       <input type="submit" name="home_Button" value="Home">
       <input type="submit" name="logoutbutton" value="Logout">
     </form>
+
+    <form align="right" action="/search">
+      Search: <input align="right" type="text" name="search_story">
+      <input type="submit" value="Search">
+    </form>
     <hr>
     {% endblock %}
 	  {% block content %}
@@ -26,5 +31,5 @@
   {% block footer %}
   &copy; copyright 2018 by Quack-a-Moo
   {% endblock %}
-  
+
 </html>
