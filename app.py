@@ -159,7 +159,7 @@ def s():
     s = request.args["search_story"]
     l = []
     for title in search.searchresults(s):
-        l.append(title[0])
+        l.append(title)
     return render_template('search.html',stories=l)
 
 if __name__ == '__main__':

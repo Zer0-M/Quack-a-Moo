@@ -115,7 +115,7 @@ def searchresults(s):
     DB_FILE="data/quackamoo.db"
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    get = "SELECT title FROM stories WHERE title LIKE " + "'%" + s + "%'"
+    get = "SELECT title,storyId FROM stories WHERE title LIKE " + "'%" + s + "%'"
     c.execute(get)
     list = c.fetchall()
     return list
