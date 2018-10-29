@@ -212,7 +212,7 @@ Commented the code
 
 MohammedJ -- 2018-10-28 19:11
 --------------------------------------------------------------
-Edited readme to explain the necessity of passlib 
+Edited readme to explain the necessity of passlib
 updated design doc to reflect current state of project
 ==============================================================
 
@@ -225,4 +225,9 @@ Fixed the best stories function that Ahnaf was working on
 MohammedJ -- 2018-10-28 19:54
 --------------------------------------------------------------
 Links from all stories and best stories will now lead to view page if the user has already edited them
+==============================================================
+
+IsaacJ -- 2018-10-28 21:30
+--------------------------------------------------------------
+Added searching functionality to find stories
 ==============================================================
