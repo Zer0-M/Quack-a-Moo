@@ -18,7 +18,7 @@
 <h2>Best Stories</h2>
 <ol>
    {% for story in popular %}
-   <li><a href="/edit?title={{story}}&storyId={{storyId}}">{{story}}</a></li>
+   <li><a href="/edit?title={{story[2]}}&storyId={{story[1]}}">{{story[2]}}</a></li>
    {% endfor %}
 </ol>
 <h2><a href="/all">All Stories</a></h2>

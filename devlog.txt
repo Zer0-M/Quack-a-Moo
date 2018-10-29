@@ -220,3 +220,9 @@ MohammedJ -- 2018-10-28 19:54
 --------------------------------------------------------------
 Fixed the best stories function that Ahnaf was working on
 ==============================================================
+
+
+MohammedJ -- 2018-10-28 19:54
+--------------------------------------------------------------
+Links from all stories and best stories will now lead to view page if the user has already edited them
+==============================================================

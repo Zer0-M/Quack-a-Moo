@@ -120,6 +120,7 @@ def best():
     temp = c.fetchall()
     i=0
     while i<3:
-        most.append(temp[i][2])
+        most.append(temp[i])
         i=i+1
+    print(most)
     return most

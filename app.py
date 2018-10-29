@@ -144,8 +144,7 @@ def edit():
         username = session["username"]
         edit=search.edit(username,storyId)#this variable is used to check if a user has edited a story, if its empty the user has not edited it
         if edit != None : #if user already edited
-            flash("Already edited. View from home page")
-            return redirect(url_for("home"))
+            return redirect("view?title="+title+"&storyId="+storyId)
         body=search.text(storyId)
         return render_template('edit.html',title=title, story=body, storyId = storyId)
     else:
