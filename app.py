@@ -59,7 +59,7 @@ def authPage():
         return render_template('home.html',edited=editedList, popular=most)
     else: #else credentials are wrong
         flash('incorrect credentials')
-        return redirect(url_for('home')) 
+        return redirect(url_for('home'))
 
 '''
 reg
@@ -123,7 +123,7 @@ def view():
             update.create(title, body, username) #adds the story to logs and stories
         else: #if the user added to a story or is viewing it
             title = request.args["title"]
-            storyId= request.args["storyId"] 
+            storyId= request.args["storyId"]
             if "submit" in request.form: #if the user added to the story
                 body=request.form["body"]
                 update.add(title,body,username,storyId) #adds the story to logs and updated the body in stories
@@ -149,7 +149,19 @@ def edit():
         return render_template('edit.html',title=title, story=body, storyId = storyId)
     else:
         return redirect(url_for("home"))
-    
+
+'''
+search
+this is the page when you search for a story
+'''
+@app.route("/search")
+def s():
+    s = request.args["search_story"]
+    l = []
+    for title in search.searchresults(s):
+        l.append(title)
+    return render_template('search.html',stories=l)
+
 if __name__ == '__main__':
     app.debug = True
     app.run()

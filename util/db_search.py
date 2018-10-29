@@ -58,7 +58,7 @@ returns [username] if username exists
 def username(username):
     DB_FILE="data/quackamoo.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-    c = db.cursor() 
+    c = db.cursor()
     user_exists = 'SELECT username FROM users WHERE users.username = (?);'
     c.execute(user_exists,(username,))
     userList = c.fetchall()
@@ -72,7 +72,7 @@ returns a not empty list if user edited the story
 def edit(username,storyId):
     DB_FILE="data/quackamoo.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-    c = db.cursor() 
+    c = db.cursor()
     check="SELECT storyId FROM logs WHERE username = (?) AND storyId=(?);"
     c.execute(check,(username,storyId))
     edit=c.fetchone()
@@ -106,6 +106,7 @@ def all():
     c.execute(getstories)
     storylist=c.fetchall()
     return storylist
+    
 '''
 best()
 returns a the top 3 stories based on the number of edits
@@ -124,3 +125,16 @@ def best():
         i=i+1
     print(most)
     return most
+
+'''
+searchresults(s)
+returns list of stories that contain s
+'''
+def searchresults(s):
+    DB_FILE="data/quackamoo.db"
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    get = "SELECT title,storyId FROM stories WHERE title LIKE " + "'%" + s + "%'"
+    c.execute(get)
+    list = c.fetchall()
+    return list
